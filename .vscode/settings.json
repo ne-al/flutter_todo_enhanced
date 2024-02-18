@@ -1,0 +1,8 @@
+{
+  "cSpell.words": ["incompleted"],
+  "files.exclude": {
+    "": true,
+    "**/*.freezed.dart": true,
+    "**/*.g.dart": true
+  }
+}
