@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_todo_enhanced/app/components/custom_textfield.dart';
+import 'package:flutter_todo_enhanced/core/services/auth_service.dart';
 import 'package:gap/gap.dart';
 import 'package:glass_kit/glass_kit.dart';
 import 'package:go_router/go_router.dart';
@@ -109,7 +110,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       width: 180.w,
                                       height: 46.h,
                                       child: OutlinedButton(
-                                        onPressed: () {},
+                                        onPressed: createUser,
                                         child: const Text('REGISTER'),
                                       ),
                                     ),
@@ -157,6 +158,30 @@ class _RegisterPageState extends State<RegisterPage> {
           ],
         ),
       ),
+    );
+  }
+
+  void createUser() async {
+    if (nameController.text.trim().isEmpty) {
+      return;
+    }
+    if (nameController.text.trim().length < 3) {
+      return;
+    }
+    if (emailController.text.trim().isEmpty) {
+      return;
+    }
+    if (passwordController.text.trim().isEmpty) {
+      return;
+    }
+    if (passwordController.text.trim().length < 6) {
+      return;
+    }
+
+    await AuthService().createUser(
+      emailController.text.trim(),
+      passwordController.text.trim(),
+      nameController.text.trim(),
     );
   }
 }

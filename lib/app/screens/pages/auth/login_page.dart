@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_todo_enhanced/app/components/custom_textfield.dart';
+import 'package:flutter_todo_enhanced/core/services/auth_service.dart';
 import 'package:gap/gap.dart';
 import 'package:glass_kit/glass_kit.dart';
 import 'package:go_router/go_router.dart';
@@ -105,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                                       width: 180.w,
                                       height: 46.h,
                                       child: OutlinedButton(
-                                        onPressed: () {},
+                                        onPressed: signIn,
                                         child: const Text('LOGIN'),
                                       ),
                                     ),
@@ -154,5 +156,29 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  void signIn() async {
+    if (emailController.text.trim().isEmpty) {
+      return;
+    }
+    if (passwordController.text.trim().isEmpty) {
+      return;
+    }
+    if (passwordController.text.trim().length < 6) {
+      return;
+    }
+
+    try {
+      await AuthService().signInUser(
+        emailController.text.trim(),
+        passwordController.text.trim(),
+      );
+      if (!context.mounted) return;
+
+      Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      print(e.code);
+    }
   }
 }
