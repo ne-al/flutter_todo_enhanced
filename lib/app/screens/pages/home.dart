@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:glass_kit/glass_kit.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_todo_enhanced/core/providers/todo_provider.dart';
+import 'package:flutter_todo_enhanced/core/services/auth_service.dart';
+import 'package:go_router/go_router.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends ConsumerState<HomePage>
+    with TickerProviderStateMixin {
+  late TabController tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(length: 2, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,21 +29,84 @@ class _HomePageState extends State<HomePage> {
         title: const Text('TODO ENHANCED'),
         centerTitle: true,
         actions: [
-          IconButton.filledTonal(
-            onPressed: () {},
-            icon: const Icon(Icons.add),
+          IconButton(
+            onPressed: () {
+              AuthService().signOutUser();
+            },
+            icon: const Icon(Icons.logout_rounded),
           ),
         ],
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            GlassContainer.clearGlass(
-              height: 220,
-              width: 215,
-              borderRadius: BorderRadius.circular(20),
+        bottom: TabBar(
+          controller: tabController,
+          tabs: const [
+            Tab(
+              child: Text('Todo'),
+            ),
+            Tab(
+              child: Text('Categories'),
             ),
           ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.go('/home/addTodo');
+        },
+        child: const Icon(Icons.add_rounded),
+      ),
+      body: SafeArea(
+        child: DefaultTabController(
+          length: 2,
+          initialIndex: 0,
+          child: TabBarView(
+            controller: tabController,
+            children: [
+              const Center(child: Text('Todo')),
+              Consumer(
+                builder: (context, ref, child) {
+                  final categories = ref.watch(categoriesProvider);
+                  return categories.when(
+                    data: (data) {
+                      List<double> customWidths = [];
+                      while (customWidths.length < data.length) {
+                        customWidths.add(100.0);
+                      }
+                      return Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 12,
+                          ),
+                          child: Column(
+                            children: [
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Scrollbar(
+                                  child: ToggleSwitch(
+                                    labels: data,
+                                    customWidths: customWidths,
+                                    centerText: true,
+                                    multiLineText: true,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    error: (error, stackTrace) {
+                      return Center(
+                        child: Text('An error occurred\n$error'),
+                      );
+                    },
+                    loading: () => const Center(
+                      child: CircularProgressIndicator.adaptive(),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -24,7 +24,7 @@ mixin _$UserModel {
   String get email => throw _privateConstructorUsedError;
   String get uid => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
-  dynamic get categories => throw _privateConstructorUsedError;
+  List<String> get categories => throw _privateConstructorUsedError;
   List<String> get completedTodos => throw _privateConstructorUsedError;
   List<String> get incompletedTodos => throw _privateConstructorUsedError;
   List<String> get inProgressTodos => throw _privateConstructorUsedError;
@@ -46,7 +46,7 @@ abstract class $UserModelCopyWith<$Res> {
       String email,
       String uid,
       DateTime createdAt,
-      dynamic categories,
+      List<String> categories,
       List<String> completedTodos,
       List<String> incompletedTodos,
       List<String> inProgressTodos,
@@ -70,7 +70,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? email = null,
     Object? uid = null,
     Object? createdAt = null,
-    Object? categories = freezed,
+    Object? categories = null,
     Object? completedTodos = null,
     Object? incompletedTodos = null,
     Object? inProgressTodos = null,
@@ -93,10 +93,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      categories: freezed == categories
+      categories: null == categories
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as List<String>,
       completedTodos: null == completedTodos
           ? _value.completedTodos
           : completedTodos // ignore: cast_nullable_to_non_nullable
@@ -130,7 +130,7 @@ abstract class _$$UserModelImplCopyWith<$Res>
       String email,
       String uid,
       DateTime createdAt,
-      dynamic categories,
+      List<String> categories,
       List<String> completedTodos,
       List<String> incompletedTodos,
       List<String> inProgressTodos,
@@ -152,7 +152,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? email = null,
     Object? uid = null,
     Object? createdAt = null,
-    Object? categories = freezed,
+    Object? categories = null,
     Object? completedTodos = null,
     Object? incompletedTodos = null,
     Object? inProgressTodos = null,
@@ -175,7 +175,10 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      categories: freezed == categories ? _value.categories! : categories,
+      categories: null == categories
+          ? _value._categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       completedTodos: null == completedTodos
           ? _value._completedTodos
           : completedTodos // ignore: cast_nullable_to_non_nullable
@@ -204,12 +207,13 @@ class _$UserModelImpl extends _UserModel {
       required this.email,
       required this.uid,
       required this.createdAt,
-      this.categories = todoDefaultCategories,
+      final List<String> categories = todoCategories,
       final List<String> completedTodos = const [],
       final List<String> incompletedTodos = const [],
       final List<String> inProgressTodos = const [],
       final List<String> allTodosUid = const []})
-      : _completedTodos = completedTodos,
+      : _categories = categories,
+        _completedTodos = completedTodos,
         _incompletedTodos = incompletedTodos,
         _inProgressTodos = inProgressTodos,
         _allTodosUid = allTodosUid,
@@ -226,9 +230,15 @@ class _$UserModelImpl extends _UserModel {
   final String uid;
   @override
   final DateTime createdAt;
+  final List<String> _categories;
   @override
   @JsonKey()
-  final dynamic categories;
+  List<String> get categories {
+    if (_categories is EqualUnmodifiableListView) return _categories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_categories);
+  }
+
   final List<String> _completedTodos;
   @override
   @JsonKey()
@@ -282,7 +292,7 @@ class _$UserModelImpl extends _UserModel {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             const DeepCollectionEquality()
-                .equals(other.categories, categories) &&
+                .equals(other._categories, _categories) &&
             const DeepCollectionEquality()
                 .equals(other._completedTodos, _completedTodos) &&
             const DeepCollectionEquality()
@@ -301,7 +311,7 @@ class _$UserModelImpl extends _UserModel {
       email,
       uid,
       createdAt,
-      const DeepCollectionEquality().hash(categories),
+      const DeepCollectionEquality().hash(_categories),
       const DeepCollectionEquality().hash(_completedTodos),
       const DeepCollectionEquality().hash(_incompletedTodos),
       const DeepCollectionEquality().hash(_inProgressTodos),
@@ -327,7 +337,7 @@ abstract class _UserModel extends UserModel {
       required final String email,
       required final String uid,
       required final DateTime createdAt,
-      final dynamic categories,
+      final List<String> categories,
       final List<String> completedTodos,
       final List<String> incompletedTodos,
       final List<String> inProgressTodos,
@@ -346,7 +356,7 @@ abstract class _UserModel extends UserModel {
   @override
   DateTime get createdAt;
   @override
-  dynamic get categories;
+  List<String> get categories;
   @override
   List<String> get completedTodos;
   @override

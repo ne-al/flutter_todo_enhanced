@@ -1,7 +1,7 @@
-const List<String> todoDefaultCategories = [
-  'Home',
-  'Work',
+const List<String> todoCategories = [
+  'All',
   'Personal',
+  'Work',
   'Important',
-  'Meetings',
+  'Meetings'
 ];

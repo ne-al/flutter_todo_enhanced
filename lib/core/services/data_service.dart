@@ -3,6 +3,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_todo_enhanced/core/models/categories_model.dart';
 import 'package:flutter_todo_enhanced/core/models/user_model.dart';
 
 class DataService {
@@ -23,5 +24,17 @@ class DataService {
         .collection('userdata')
         .doc(userCredential.user!.uid)
         .set(userModel.toJson());
+  }
+
+  Future<void> addTodo() async {
+    CategoriesModel categoriesModel = const CategoriesModel(
+      name: 'name',
+      width: 100,
+    );
+
+    await firestore
+        .collection('todo')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .set(categoriesModel.toJson());
   }
 }

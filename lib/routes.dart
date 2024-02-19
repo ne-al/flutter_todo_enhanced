@@ -1,6 +1,7 @@
 import 'package:flutter_todo_enhanced/app/screens/pages/auth/login_page.dart';
 import 'package:flutter_todo_enhanced/app/screens/pages/auth/register_page.dart';
 import 'package:flutter_todo_enhanced/app/screens/pages/home.dart';
+import 'package:flutter_todo_enhanced/app/screens/views/add_todos.dart';
 import 'package:flutter_todo_enhanced/core/handler/auth_handler.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,6 +17,12 @@ final routes = GoRouter(
           path: 'home',
           name: 'home',
           builder: (context, state) => const HomePage(),
+          routes: [
+            GoRoute(
+              path: 'addTodo',
+              builder: (context, state) => const AddTodo(),
+            ),
+          ],
         ),
         GoRoute(
           path: 'login',

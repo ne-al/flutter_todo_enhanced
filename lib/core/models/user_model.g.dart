@@ -12,7 +12,10 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
       email: json['email'] as String,
       uid: json['uid'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
-      categories: json['categories'] ?? todoDefaultCategories,
+      categories: (json['categories'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          todoCategories,
       completedTodos: (json['completedTodos'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??

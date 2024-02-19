@@ -183,5 +183,8 @@ class _RegisterPageState extends State<RegisterPage> {
       passwordController.text.trim(),
       nameController.text.trim(),
     );
+
+    if (!context.mounted) return;
+    Navigator.pop(context);
   }
 }

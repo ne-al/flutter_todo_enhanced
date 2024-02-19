@@ -12,7 +12,7 @@ class UserModel with _$UserModel {
     required String email,
     required String uid,
     required DateTime createdAt,
-    @Default(todoDefaultCategories) categories,
+    @Default(todoCategories) List<String> categories,
     @Default([]) List<String> completedTodos,
     @Default([]) List<String> incompletedTodos,
     @Default([]) List<String> inProgressTodos,

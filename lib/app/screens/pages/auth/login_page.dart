@@ -174,9 +174,6 @@ class _LoginPageState extends State<LoginPage> {
         emailController.text.trim(),
         passwordController.text.trim(),
       );
-      if (!context.mounted) return;
-
-      Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       print(e.code);
     }
