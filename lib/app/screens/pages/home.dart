@@ -50,7 +50,7 @@ class _HomePageState extends ConsumerState<HomePage>
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.go('/home/addTodo');
+          context.go('/addTodo');
         },
         child: const Icon(Icons.add_rounded),
       ),
@@ -68,9 +68,12 @@ class _HomePageState extends ConsumerState<HomePage>
                   return categories.when(
                     data: (data) {
                       List<double> customWidths = [];
-                      while (customWidths.length < data.length) {
+                      List<String> labels = data.toList();
+                      labels.insert(0, 'All');
+                      while (customWidths.length < labels.length) {
                         customWidths.add(100.0);
                       }
+
                       return Center(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
@@ -82,7 +85,7 @@ class _HomePageState extends ConsumerState<HomePage>
                                 scrollDirection: Axis.horizontal,
                                 child: Scrollbar(
                                   child: ToggleSwitch(
-                                    labels: data,
+                                    labels: labels,
                                     customWidths: customWidths,
                                     centerText: true,
                                     multiLineText: true,

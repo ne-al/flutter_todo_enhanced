@@ -23,6 +23,8 @@ mixin _$TodoModel {
   String get todo_title => throw _privateConstructorUsedError;
   String get category => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
+  String get todoId => throw _privateConstructorUsedError;
+  String get authorId => throw _privateConstructorUsedError;
   bool get isEdited => throw _privateConstructorUsedError;
   bool get isCompleted => throw _privateConstructorUsedError;
   String? get todo_description => throw _privateConstructorUsedError;
@@ -43,6 +45,8 @@ abstract class $TodoModelCopyWith<$Res> {
       {String todo_title,
       String category,
       DateTime createdAt,
+      String todoId,
+      String authorId,
       bool isEdited,
       bool isCompleted,
       String? todo_description,
@@ -65,6 +69,8 @@ class _$TodoModelCopyWithImpl<$Res, $Val extends TodoModel>
     Object? todo_title = null,
     Object? category = null,
     Object? createdAt = null,
+    Object? todoId = null,
+    Object? authorId = null,
     Object? isEdited = null,
     Object? isCompleted = null,
     Object? todo_description = freezed,
@@ -83,6 +89,14 @@ class _$TodoModelCopyWithImpl<$Res, $Val extends TodoModel>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      todoId: null == todoId
+          ? _value.todoId
+          : todoId // ignore: cast_nullable_to_non_nullable
+              as String,
+      authorId: null == authorId
+          ? _value.authorId
+          : authorId // ignore: cast_nullable_to_non_nullable
+              as String,
       isEdited: null == isEdited
           ? _value.isEdited
           : isEdited // ignore: cast_nullable_to_non_nullable
@@ -115,6 +129,8 @@ abstract class _$$TodoModelImplCopyWith<$Res>
       {String todo_title,
       String category,
       DateTime createdAt,
+      String todoId,
+      String authorId,
       bool isEdited,
       bool isCompleted,
       String? todo_description,
@@ -135,6 +151,8 @@ class __$$TodoModelImplCopyWithImpl<$Res>
     Object? todo_title = null,
     Object? category = null,
     Object? createdAt = null,
+    Object? todoId = null,
+    Object? authorId = null,
     Object? isEdited = null,
     Object? isCompleted = null,
     Object? todo_description = freezed,
@@ -153,6 +171,14 @@ class __$$TodoModelImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      todoId: null == todoId
+          ? _value.todoId
+          : todoId // ignore: cast_nullable_to_non_nullable
+              as String,
+      authorId: null == authorId
+          ? _value.authorId
+          : authorId // ignore: cast_nullable_to_non_nullable
+              as String,
       isEdited: null == isEdited
           ? _value.isEdited
           : isEdited // ignore: cast_nullable_to_non_nullable
@@ -180,6 +206,8 @@ class _$TodoModelImpl extends _TodoModel {
       {required this.todo_title,
       required this.category,
       required this.createdAt,
+      required this.todoId,
+      required this.authorId,
       this.isEdited = false,
       this.isCompleted = false,
       this.todo_description,
@@ -196,6 +224,10 @@ class _$TodoModelImpl extends _TodoModel {
   @override
   final DateTime createdAt;
   @override
+  final String todoId;
+  @override
+  final String authorId;
+  @override
   @JsonKey()
   final bool isEdited;
   @override
@@ -208,7 +240,7 @@ class _$TodoModelImpl extends _TodoModel {
 
   @override
   String toString() {
-    return 'TodoModel(todo_title: $todo_title, category: $category, createdAt: $createdAt, isEdited: $isEdited, isCompleted: $isCompleted, todo_description: $todo_description, editedAt: $editedAt)';
+    return 'TodoModel(todo_title: $todo_title, category: $category, createdAt: $createdAt, todoId: $todoId, authorId: $authorId, isEdited: $isEdited, isCompleted: $isCompleted, todo_description: $todo_description, editedAt: $editedAt)';
   }
 
   @override
@@ -222,6 +254,9 @@ class _$TodoModelImpl extends _TodoModel {
                 other.category == category) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
+            (identical(other.todoId, todoId) || other.todoId == todoId) &&
+            (identical(other.authorId, authorId) ||
+                other.authorId == authorId) &&
             (identical(other.isEdited, isEdited) ||
                 other.isEdited == isEdited) &&
             (identical(other.isCompleted, isCompleted) ||
@@ -235,7 +270,7 @@ class _$TodoModelImpl extends _TodoModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, todo_title, category, createdAt,
-      isEdited, isCompleted, todo_description, editedAt);
+      todoId, authorId, isEdited, isCompleted, todo_description, editedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -256,6 +291,8 @@ abstract class _TodoModel extends TodoModel {
       {required final String todo_title,
       required final String category,
       required final DateTime createdAt,
+      required final String todoId,
+      required final String authorId,
       final bool isEdited,
       final bool isCompleted,
       final String? todo_description,
@@ -271,6 +308,10 @@ abstract class _TodoModel extends TodoModel {
   String get category;
   @override
   DateTime get createdAt;
+  @override
+  String get todoId;
+  @override
+  String get authorId;
   @override
   bool get isEdited;
   @override

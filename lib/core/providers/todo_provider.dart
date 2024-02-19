@@ -3,12 +3,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo_enhanced/core/models/user_model.dart';
 
-final categoriesProvider = FutureProvider<List<String>>((ref) async {
-  var data = await FirebaseFirestore.instance
+final categoriesProvider =
+    FutureProvider.autoDispose<List<String>>((ref) async {
+  var response = await FirebaseFirestore.instance
       .collection('userdata')
       .doc(FirebaseAuth.instance.currentUser!.uid)
       .get();
 
-  UserModel model = UserModel.fromJson(data.data()!);
+  Map<String, dynamic> data = response.data()!;
+
+  UserModel model = UserModel.fromJson(data);
+
   return model.categories;
 });

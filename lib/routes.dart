@@ -17,12 +17,10 @@ final routes = GoRouter(
           path: 'home',
           name: 'home',
           builder: (context, state) => const HomePage(),
-          routes: [
-            GoRoute(
-              path: 'addTodo',
-              builder: (context, state) => const AddTodo(),
-            ),
-          ],
+        ),
+        GoRoute(
+          path: 'addTodo',
+          builder: (context, state) => const AddTodo(),
         ),
         GoRoute(
           path: 'login',

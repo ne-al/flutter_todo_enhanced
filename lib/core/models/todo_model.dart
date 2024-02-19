@@ -12,6 +12,8 @@ class TodoModel with _$TodoModel {
     required String todo_title,
     required String category,
     required DateTime createdAt,
+    required String todoId,
+    required String authorId,
     @Default(false) bool isEdited,
     @Default(false) bool isCompleted,
     String? todo_description,
