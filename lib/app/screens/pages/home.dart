@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_todo_enhanced/app/widgets/todo_card_widget.dart';
 import 'package:flutter_todo_enhanced/core/providers/todo_provider.dart';
 import 'package:flutter_todo_enhanced/core/services/auth_service.dart';
 import 'package:go_router/go_router.dart';
@@ -61,7 +62,36 @@ class _HomePageState extends ConsumerState<HomePage>
           child: TabBarView(
             controller: tabController,
             children: [
-              const Center(child: Text('Todo')),
+              Consumer(
+                builder: (context, ref, child) {
+                  final getAllTodos = ref.watch(getAllTodosProvider);
+
+                  return getAllTodos.when(
+                    data: (data) {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: data.length,
+                        itemBuilder: (context, index) {
+                          return TodoCardWidget(
+                            data: data[index],
+                          );
+                        },
+                      );
+                    },
+                    error: (error, stackTrace) {
+                      return Center(
+                        child: Text(
+                          'An error occurred\n$error',
+                          textAlign: TextAlign.center,
+                        ),
+                      );
+                    },
+                    loading: () => const Center(
+                      child: CircularProgressIndicator.adaptive(),
+                    ),
+                  );
+                },
+              ),
               Consumer(
                 builder: (context, ref, child) {
                   final categories = ref.watch(categoriesProvider);
